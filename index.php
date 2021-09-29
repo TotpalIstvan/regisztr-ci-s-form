@@ -12,18 +12,25 @@ $jelszoHibaUzenet = '';
 $sikeresRegisztracioUzenet = "";
 $sikeresReg = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$emailMezo = '';
+$userMezo = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    $emailMezo = $_POST['email'] ?? '';
+    $userMezo = $_POST['user'] ?? '';
+
+{
     if (empty($_POST['username'])) {
         $userHiba = true;
         $userHibaUzenet = 'Kérem adjon meg egy felhasználónevet';
         $username = '';
-    } else if (strtolower($_POST['username']) === 'admin') {
+    } else if (mb_strtolower($_POST['username']) === 'admin') {
         $userHiba = true;
         $userHibaUzenet = 'A felhasználóneve nem lehet ' . $_POST['username'];
         $username = '';
-    } else if (strlen($_POST['username']) < 4) {
+    } else if (mb_strlen($_POST['username']) < 3) {
         $userHiba = true;
-        $userHibaUzenet = 'Kérem adjon meg egy 3 karakternél hosszabb felhasználónevet';
+        $userHibaUzenet = 'Kérem adjon meg egy 3 karakteres, vagy hosszabb felhasználónevet';
         $username = $_POST['username'];
     } else {
         $username = $_POST['username'];
@@ -33,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $emailHiba = true;
         $emailHibaUzenet = 'Kérem adjon meg egy emailcímet';
         $email = '';
-    } elseif (strpos($_POST['email'], '.') === false) {
+    } elseif (mb_strpos($_POST['email'], '.') === false) {
         $emailHiba = true;
         $emailHibaUzenet = 'Rossz emailcím formátum';
         $email = $_POST['email'];
@@ -46,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $jelszoHibaUzenet = 'Kérem adjon meg egy kelszót';
         $password = '';
         $password2 = '';
-    } else if (strlen($_POST['password']) < 8) {
+    } else if (mb_strlen($_POST['password']) < 8) {
         $jelszoHiba = true;
         $jelszoHibaUzenet = 'A jelszonak legalabb 8 karakternek kell lennie';
         $password = '';
@@ -58,16 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password2 = '';
     }
     
-   /* if (!$userHiba && !$emailHiba && !$jelszoHiba) {
-      $sikeresRegisztracioUzenet = 'Sikeres regisztráció!';
+    if (!$userHiba && !$emailHiba && !$jelszoHiba) {
+      $sikeresReg = true;
+      $sikeresRegisztracioUzenet = "Sikeres regisztráció";
     }
  else {
     $username = $email = $password = $password2 = "";
 }
-*/
+
 }
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
@@ -75,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Regisztráció</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    
 </head>
 <body> <?php 
 if(!$sikeresReg) { 
@@ -101,7 +111,7 @@ if(!$sikeresReg) {
                 Jelszó:<br>
                 <input type='password' name='password'>
             </label>
-            <div class='errormessage'><?php echo $emailHibaUzenet; ?></div>
+            <div class='errormessage'><?php echo $jelszoHibaUzenet; ?></div>
         </div>
         <div>
             <label>
@@ -116,6 +126,6 @@ if(!$sikeresReg) {
     <?php } else {?>
     <p class='success'>Sikeres regisztráció!</p>
     <?php } ?>
-   
+    
 </body>
 </html>
