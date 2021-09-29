@@ -1,5 +1,17 @@
 <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=JhQk8G8PD1bp8TaOEmIn2RSUbspVHaGNAwg2o4OGAeiC2rHhnXIIQEcpeDcZTTSntuT5DgbJMxaW7eVabsJZf0m_xanvHcM0jf3JPLZLBGZNm9GEoYuD8Qs7m-CXLpGsO35o2gmsblLxsCbhaOMF5_mqPixTfzIeOldZpz1n2QTXeRkdyDJ3tWn7Rr5MlaKDh_NPFiYq62fyp3_vPUSqfHT8AkeuSPSH0V0DuNkgmmNJKoNY-oC7cA6NJvkvTIhGfYKr_TYtSMo5UyIpEr48V84Re-TRLOl_c5CsC8Dp9g1Z8V0d9dfyKEwGd9htp7TH7qEUoLYf1YdmLt8rFh1RgFhuidu3EkT6SLZuca0WpySeW7935nuyIclCiHasPwuuO7AQKcdlplLeRbTUmucbDVs9mPljk97jAFfunxHLQuAMPhOxmRaDe7ml-qMUVAJOYzzxp6Kx1rZtdh8LAewKuw" charset="UTF-8"></script>
 <?php
+
+
+$userHiba = false;
+$userHibaUzenet = '';
+$emailHiba = false;
+$emailHibaUzenet = '';
+$jelszoHiba = false;
+$jelszoHibaUzenet = '';
+
+$sikeresRegisztracioUzenet = "";
+$sikeresReg = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['username'])) {
         $userHiba = true;
@@ -46,23 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password2 = '';
     }
     
-    if (!$userHiba && !$emailHiba && !$jelszoHiba) {
+   /* if (!$userHiba && !$emailHiba && !$jelszoHiba) {
       $sikeresRegisztracioUzenet = 'Sikeres regisztráció!';
     }
-} else {
+ else {
     $username = $email = $password = $password2 = "";
 }
-        
-
-
-
-
-$userHiba = false;
-$userHibaUzenet = '';
-$emailHiba = false;
-$emailHibaUzenet = '';
-$jelszoHiba = false;
-$jelszoHibaUzenet = '';
+*/
+}
 
 ?><!DOCTYPE html>
 <html>
@@ -73,7 +76,11 @@ $jelszoHibaUzenet = '';
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
 </head>
-<body>
+<body> <?php 
+if(!$sikeresReg) { 
+    
+    
+    ?>
     <form method="post">
         <div>
             <label>
@@ -106,8 +113,9 @@ $jelszoHibaUzenet = '';
             <input type='submit' value='Regisztráció'>
         </div>
     </form>
+    <?php } else {?>
     <p class='success'>Sikeres regisztráció!</p>
-
+    <?php } ?>
    
 </body>
 </html>
