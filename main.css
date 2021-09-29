@@ -1,0 +1,18 @@
+label {
+    font-weight: bold;
+}
+
+.errormessage {
+    color: red;
+    font-size: 50%;
+}
+
+form {
+        line-height: 1.6;
+        width: 33%;
+}
+
+.success {
+    text-align: center;
+    font-size: 200%;
+}
